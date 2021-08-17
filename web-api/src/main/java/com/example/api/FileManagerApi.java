@@ -18,9 +18,4 @@ public interface FileManagerApi {
     @ApiOperation("批量文件上传")
     @PostMapping(value = "/file/add-many-files", produces = MediaType.APPLICATION_JSON_VALUE)
     Response<Boolean> addManyFiles(@RequestBody MultipartFile[] files);
-
-    @ApiOperation("CICD 测试")
-    @GetMapping(value = "/file/test", produces = MediaType.APPLICATION_JSON_VALUE)
-    Response<Boolean> cicdTest();
-
 }

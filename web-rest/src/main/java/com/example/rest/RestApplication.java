@@ -13,7 +13,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @EnableSwagger2
 @EnableScheduling
 @EnableTransactionManagement
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages ={"com.example.core","com.example.api","com.example.rest"})
 public class RestApplication {
     public static void main(String[] args) {
         SpringApplication.run(RestApplication.class, args);

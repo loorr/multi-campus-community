@@ -1,5 +1,6 @@
-package com.example.common;
+package com.example.common.exception;
 
+import com.example.common.ErrorCode;
 import lombok.Data;
 
 /**

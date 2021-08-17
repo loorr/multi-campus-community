@@ -1,7 +1,7 @@
 package com.example.rest;
 
 import lombok.extern.slf4j.Slf4j;
-import com.example.common.ChatException;
+import com.example.common.exception.ChatException;
 import com.example.common.ErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;

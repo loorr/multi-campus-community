@@ -1,6 +1,6 @@
 package com.example.model.entity;
 
-import com.example.model.GroupType;
+import com.example.model.type.GroupType;
 import lombok.Data;
 
 /**
