@@ -3,7 +3,7 @@ package com.example.core.service.impl;
 
 import com.example.api.req.AddEssayReq;
 import com.example.api.req.GetAllEssayPageReq;
-import com.example.common.ErrorCode;
+import com.example.common.ChatErrorCode;
 import com.example.common.exception.ChatException;
 import com.example.core.service.EssayService;
 import com.example.dao.EssayMapper;
@@ -37,7 +37,7 @@ public class EssayServiceImpl implements EssayService {
             int row = essayMapper.insertEssay(req);
             return row == 1;
         }catch (Exception e){
-            throw new ChatException(ErrorCode.ESSAY_FILED);
+            throw new ChatException(ChatErrorCode.ESSAY_FILED);
         }
     }
 }

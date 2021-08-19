@@ -1,6 +1,6 @@
 package com.example.common.exception;
 
-import com.example.common.ErrorCode;
+import com.example.common.ChatErrorCode;
 import lombok.Getter;
 
 @Getter
@@ -8,8 +8,8 @@ public class AuthExcetption extends RuntimeException{
     private int code;
     private String msg;
 
-    public AuthExcetption(ErrorCode errorCode){
-        this.code = errorCode.getCode();
-        this.msg = errorCode.getMsg();
+    public AuthExcetption(ChatErrorCode chatErrorCode){
+        this.code = chatErrorCode.getCode();
+        this.msg = chatErrorCode.getMsg();
     }
 }

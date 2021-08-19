@@ -1,6 +1,6 @@
 package com.example.core.common;
 
-import com.example.common.ErrorCode;
+import com.example.common.ChatErrorCode;
 import com.example.common.exception.ChatException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,7 +40,7 @@ public class MailService {
             javaMailSender.send(mimeMessage);
         }catch (Exception e){
             log.error("邮件发送失败 {}", to);
-            throw new ChatException(ErrorCode.EMAIL_SEND_FILED);
+            throw new ChatException(ChatErrorCode.EMAIL_SEND_FILED);
         }
     }
 

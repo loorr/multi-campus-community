@@ -7,7 +7,7 @@ import com.example.api.req.SignInReq;
 import com.example.api.vo.TokenVo;
 import com.example.api.vo.UidVo;
 import com.example.api.vo.UserInfoVo;
-import com.example.common.ErrorCode;
+import com.example.common.ChatErrorCode;
 import com.example.common.Response;
 import com.example.common.TokenUtil;
 import com.example.common.annotations.NeedToken;
@@ -48,7 +48,7 @@ public class UserController  extends BaseController implements UserApi {
     public Response<UidVo> signIn(SignInReq req) {
         UidVo uidVo = new UidVo();
         if (!StringUtils.hasLength(req.getCode())){
-            return Response.getFail(ErrorCode.NO_CODE.getCode(), ErrorCode.NO_CODE.getMsg());
+            return Response.getFail(ChatErrorCode.NO_CODE.getCode(), ChatErrorCode.NO_CODE.getMsg());
         }
         try {
             Long uid = userService.signUser(req);
@@ -63,7 +63,7 @@ public class UserController  extends BaseController implements UserApi {
     public Response<TokenVo> loginIn(LoginReq req) {
         User dbUser = null;
         if (req.getUid() == null && !StringUtils.hasLength(req.getEmail())){
-            return Response.getFail(ErrorCode.AUTH_ERROR.getCode(), ErrorCode.AUTH_ERROR.getMsg());
+            return Response.getFail(ChatErrorCode.AUTH_ERROR.getCode(), ChatErrorCode.AUTH_ERROR.getMsg());
         }
         if (req.getUid() != null){
             dbUser = userService.findUserByUid(req.getUid());
@@ -72,7 +72,7 @@ public class UserController  extends BaseController implements UserApi {
         }
         redisService.setUserPasswordByUid(dbUser.getUid(), dbUser.getPassword());
         if (dbUser == null || !dbUser.getPassword().equals(req.getPassword())){
-            return Response.getFail(ErrorCode.AUTH_ERROR.getCode(), ErrorCode.AUTH_ERROR.getMsg());
+            return Response.getFail(ChatErrorCode.AUTH_ERROR.getCode(), ChatErrorCode.AUTH_ERROR.getMsg());
         }
         TokenVo tokenVo = new TokenVo();
         String token = TokenUtil.createToken(String.valueOf(dbUser.getUid()), dbUser.getPassword());

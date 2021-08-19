@@ -8,11 +8,11 @@ import lombok.ToString;
  * @author zjianfa
  */
 
+
 @Getter
 @ToString
 @AllArgsConstructor
-public enum ErrorCode {
-    OPERATION_SUCCESS(000, "操作成功"),
+public enum ChatErrorCode implements BaseError {
     DUPLICATE_ERROR(001, "信息重复"),
     EMAIL_SEND_FILED(002, "邮件发送失败"),
     ESSAY_FILED(003,"动态发表失败"),
@@ -27,6 +27,6 @@ public enum ErrorCode {
     AUTH_ERROR(101, "用户信息错误");
 
 
-    private final int code;
+    private final Integer code;
     private final String msg;
 }

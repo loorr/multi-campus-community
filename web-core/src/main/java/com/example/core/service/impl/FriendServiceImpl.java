@@ -3,7 +3,7 @@ package com.example.core.service.impl;
 
 import com.example.api.req.AddOrDeleteUserReq;
 import com.example.api.type.FriendState;
-import com.example.common.ErrorCode;
+import com.example.common.ChatErrorCode;
 import com.example.common.exception.ChatException;
 import com.example.core.service.FriendService;
 import com.example.dao.FriendMapper;
@@ -24,10 +24,10 @@ public class FriendServiceImpl implements FriendService {
         try{
             row = friendMapper.addFriend(req);
         }catch (DuplicateKeyException e){
-            throw new ChatException(ErrorCode.DUPLICATE_ERROR);
+            throw new ChatException(ChatErrorCode.DUPLICATE_ERROR);
         }
         if (row != 1){
-            throw new ChatException(ErrorCode.OPERATION_ERROR);
+            throw new ChatException(ChatErrorCode.OPERATION_ERROR);
         }
         Friends friends = friendMapper.getFriendShip(req.getFromUid(), req.getToUid());
         if (friends == null || !req.getFromUid().equals(friends.getToUid())){

@@ -1,7 +1,7 @@
 package com.example.core.service.impl;
 
 import com.example.api.req.SignInReq;
-import com.example.common.ErrorCode;
+import com.example.common.ChatErrorCode;
 import com.example.common.IdGenerator;
 import com.example.common.exception.ChatException;
 import com.example.core.common.MailService;
@@ -37,7 +37,7 @@ public class UserServiceImpl implements UserService {
             redisService.setAuthCode(req.getEmail(), code);
             mailService.sendMail(req.getEmail(), "Sign Code", code);
         }catch (Exception e){
-            throw new ChatException(ErrorCode.CODE_SEND_FILED);
+            throw new ChatException(ChatErrorCode.CODE_SEND_FILED);
         }
     }
 
@@ -50,10 +50,10 @@ public class UserServiceImpl implements UserService {
     public Long signUser(SignInReq req) {
         String code = redisService.getAuthCode(req.getEmail());
         if (code == null){
-            throw new ChatException(ErrorCode.CODE_EXPRIED);
+            throw new ChatException(ChatErrorCode.CODE_EXPRIED);
         }
         if (!code.equals(req.getCode())){
-            throw new ChatException(ErrorCode.ERROR_CODE);
+            throw new ChatException(ChatErrorCode.ERROR_CODE);
         }
         Long uid;
         try {
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
             user.setNickname(req.getNickname());
             userMapper.insertOne(user);
         }catch (DuplicateKeyException e){
-            throw new ChatException(ErrorCode.AUTH_ERROR);
+            throw new ChatException(ChatErrorCode.AUTH_ERROR);
         }
         return uid;
     }

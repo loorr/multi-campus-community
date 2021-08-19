@@ -5,7 +5,7 @@ import com.example.api.req.AddGroupReq;
 import com.example.api.req.JoinOrQuitGroupReq;
 import com.example.api.req.SearchGroupReq;
 import com.example.api.vo.GroupInfoVo;
-import com.example.common.ErrorCode;
+import com.example.common.ChatErrorCode;
 import com.example.common.IdGenerator;
 import com.example.common.exception.ChatException;
 import com.example.core.service.GroupService;
@@ -39,7 +39,7 @@ public class GroupServiceImpl implements GroupService {
             groupMapper.addGroupCurrNum(req.getGroupId());
             groupMemberMapper.addMember(req.getGroupId(), req.getUid());
         }catch (DuplicateKeyException e){
-            throw new ChatException(ErrorCode.DUPLICATE_ERROR);
+            throw new ChatException(ChatErrorCode.DUPLICATE_ERROR);
         }
         return true;
     }
@@ -57,7 +57,7 @@ public class GroupServiceImpl implements GroupService {
         try{
             groupMapper.addGroup(group);
         }catch (DuplicateKeyException e){
-            throw new ChatException(ErrorCode.DUPLICATE_ERROR);
+            throw new ChatException(ChatErrorCode.DUPLICATE_ERROR);
         }catch (Exception e){
             e.printStackTrace();
         }

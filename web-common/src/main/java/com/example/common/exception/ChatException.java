@@ -1,6 +1,6 @@
 package com.example.common.exception;
 
-import com.example.common.ErrorCode;
+import com.example.common.ChatErrorCode;
 import lombok.Data;
 
 /**
@@ -11,8 +11,8 @@ public class ChatException extends RuntimeException{
     private int code;
     private String msg;
 
-    public ChatException(ErrorCode errorCode){
-        this.code = errorCode.getCode();
-        this.msg = errorCode.getMsg();
+    public ChatException(ChatErrorCode chatErrorCode){
+        this.code = chatErrorCode.getCode();
+        this.msg = chatErrorCode.getMsg();
     }
 }

@@ -2,7 +2,7 @@ package com.example.rest;
 
 import lombok.extern.slf4j.Slf4j;
 import com.example.common.exception.ChatException;
-import com.example.common.ErrorCode;
+import com.example.common.ChatErrorCode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -26,10 +26,10 @@ public class BaseController {
         try {
             uid = (Long) httpServletRequest.getAttribute(UID_ATTRIBUTE);
         }catch (Exception e){
-            throw new ChatException(ErrorCode.AUTH_ERROR);
+            throw new ChatException(ChatErrorCode.AUTH_ERROR);
         }
         if (uid == null){
-            throw new ChatException(ErrorCode.AUTH_ERROR);
+            throw new ChatException(ChatErrorCode.AUTH_ERROR);
         }
         return uid;
     }

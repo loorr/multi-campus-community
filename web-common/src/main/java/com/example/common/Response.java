@@ -29,7 +29,7 @@ public class Response<T> {
     private T data;
 
     public static <T> Response<T> getOk(T data){
-        return new Response(ErrorCode.OPERATION_SUCCESS.getCode(), ErrorCode.OPERATION_SUCCESS.getMsg(), new Date(), data);
+        return new Response(BaseErrorCode.OPERATION_SUCCESS.getCode(), BaseErrorCode.OPERATION_SUCCESS.getMsg(), new Date(), data);
     }
 
     public static <T> Response<T> getOk(){
@@ -37,7 +37,7 @@ public class Response<T> {
     }
 
     public static <T> Response<T> getFail(){
-        return getFail(ErrorCode.OPERATION_ERROR.getCode(), ErrorCode.OPERATION_ERROR.getMsg(),null);
+        return getFail(ChatErrorCode.OPERATION_ERROR.getCode(), ChatErrorCode.OPERATION_ERROR.getMsg(),null);
     }
 
     public static <T> Response<T> getFail(int code, String message, T data){
@@ -48,4 +48,7 @@ public class Response<T> {
         return getFail(code, message,null);
     }
 
+    public static <T> Response<T> getFail(BaseError e){
+        return getFail(e.getCode(), e.getMsg(),null);
+    }
 }
