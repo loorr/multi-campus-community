@@ -8,7 +8,11 @@ import lombok.ToString;
 @ToString
 @AllArgsConstructor
 public enum BaseErrorCode implements BaseError{
-    OPERATION_SUCCESS(000, "操作成功");
-    private final Integer code;
+    SYSTEM_BUSY("001","系统繁忙"),
+    OPERATION_SUCCESS("000", "操作成功"),
+    ILLEGAL_PARAMETERS("200","参数不合法"),
+    ;
+
+    private final String code;
     private final String msg;
 }

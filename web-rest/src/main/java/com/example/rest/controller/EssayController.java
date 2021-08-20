@@ -2,26 +2,29 @@ package com.example.rest.controller;
 
 
 import com.example.api.EssayApi;
-import com.example.api.req.AddEssayReq;
-import com.example.api.req.AddOrDeleteUserReq;
-import com.example.api.req.DeleteEssayReq;
-import com.example.api.req.GetAllEssayPageReq;
+import com.example.api.req.*;
 import com.example.common.Response;
-import com.example.common.exception.ChatException;
+import com.example.api.common.ChatException;
+import com.example.common.annotations.NeedToken;
 import com.example.core.service.EssayService;
 import com.example.model.entity.Essay;
+import com.example.rest.BaseController;
 import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class EssayController implements EssayApi {
+public class EssayController extends BaseController implements EssayApi {
+
+
 
     @Autowired
     private EssayService essayService;
 
+    @NeedToken
     @Override
     public Response<Boolean> addEssay(AddEssayReq req) {
+        req.setUid(getLoginUid());
         try{
             essayService.addEssay(req);
         }catch (ChatException e){
@@ -51,5 +54,18 @@ public class EssayController implements EssayApi {
     @Override
     public Response<Boolean> addEssayComment(GetAllEssayPageReq req) {
         return null;
+    }
+
+
+    @NeedToken
+    @Override
+    public Response<Boolean> addEssayAttitude(AddAttitudeReq req) {
+        req.setUid(getLoginUid());
+        try {
+            essayService.addEssayAttitude(req);
+        }catch (ChatException e){
+            return Response.getFail(e);
+        }
+        return Response.getOk(true);
     }
 }

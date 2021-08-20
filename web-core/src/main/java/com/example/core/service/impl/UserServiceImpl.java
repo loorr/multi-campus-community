@@ -1,12 +1,12 @@
 package com.example.core.service.impl;
 
 import com.example.api.req.SignInReq;
-import com.example.common.ChatErrorCode;
+import com.example.api.common.ChatErrorCode;
 import com.example.common.IdGenerator;
-import com.example.common.exception.ChatException;
+import com.example.api.common.ChatException;
+import com.example.core.service.UserService;
 import com.example.core.common.MailService;
 import com.example.core.common.RedisService;
-import com.example.core.service.UserService;
 import com.example.dao.UserMapper;
 import com.example.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;

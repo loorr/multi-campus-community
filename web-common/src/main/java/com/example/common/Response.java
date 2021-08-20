@@ -17,7 +17,7 @@ import java.util.Date;
 public class Response<T> {
 
     @ApiModelProperty(value = "返回码", example = "200")
-    private Integer code;
+    private String code;
 
     @ApiModelProperty(value = "返回码描述", example = "ok")
     private String message;
@@ -37,18 +37,18 @@ public class Response<T> {
     }
 
     public static <T> Response<T> getFail(){
-        return getFail(ChatErrorCode.OPERATION_ERROR.getCode(), ChatErrorCode.OPERATION_ERROR.getMsg(),null);
-    }
-
-    public static <T> Response<T> getFail(int code, String message, T data){
-        return new Response<>(code, message, new Date(), data);
-    }
-
-    public static <T> Response<T> getFail(int code, String message){
-        return getFail(code, message,null);
+        return getFail(BaseErrorCode.OPERATION_SUCCESS);
     }
 
     public static <T> Response<T> getFail(BaseError e){
         return getFail(e.getCode(), e.getMsg(),null);
+    }
+
+    public static <T> Response<T> getFail(String code, String message, T data){
+        return new Response<>(code, message, new Date(), data);
+    }
+
+    public static <T> Response<T> getFail(String code, String message){
+        return getFail(code, message,null);
     }
 }

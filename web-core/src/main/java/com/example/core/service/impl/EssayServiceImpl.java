@@ -1,24 +1,25 @@
 package com.example.core.service.impl;
 
 
+import com.example.api.req.AddAttitudeReq;
 import com.example.api.req.AddEssayReq;
 import com.example.api.req.GetAllEssayPageReq;
-import com.example.common.ChatErrorCode;
-import com.example.common.exception.ChatException;
+import com.example.api.common.ChatErrorCode;
+import com.example.api.common.ChatException;
 import com.example.core.service.EssayService;
 import com.example.dao.EssayMapper;
 import com.example.model.entity.Essay;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 @Service
 public class EssayServiceImpl implements EssayService {
 
-    @Autowired
+    @Resource
     private EssayMapper essayMapper;
 
     @Override
@@ -39,5 +40,11 @@ public class EssayServiceImpl implements EssayService {
         }catch (Exception e){
             throw new ChatException(ChatErrorCode.ESSAY_FILED);
         }
+    }
+
+    @Override
+    public Boolean addEssayAttitude(AddAttitudeReq req) {
+
+        return null;
     }
 }

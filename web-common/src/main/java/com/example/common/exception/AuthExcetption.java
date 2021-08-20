@@ -1,15 +1,15 @@
 package com.example.common.exception;
 
-import com.example.common.ChatErrorCode;
+import com.example.common.BaseError;
 import lombok.Getter;
 
 @Getter
 public class AuthExcetption extends RuntimeException{
-    private int code;
+    private String code;
     private String msg;
 
-    public AuthExcetption(ChatErrorCode chatErrorCode){
-        this.code = chatErrorCode.getCode();
-        this.msg = chatErrorCode.getMsg();
+    public AuthExcetption(BaseError e){
+        this.code = e.getCode();
+        this.msg = e.getMsg();
     }
 }

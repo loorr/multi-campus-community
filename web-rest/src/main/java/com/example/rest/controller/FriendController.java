@@ -9,7 +9,7 @@ import com.example.api.vo.FriendShipVo;
 import com.example.api.vo.FriendStateVo;
 import com.example.common.Response;
 import com.example.common.annotations.NeedToken;
-import com.example.common.exception.ChatException;
+import com.example.api.common.ChatException;
 import com.example.core.service.FriendService;
 import com.example.rest.BaseController;
 import lombok.extern.slf4j.Slf4j;

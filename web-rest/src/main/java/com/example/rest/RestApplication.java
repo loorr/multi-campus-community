@@ -8,11 +8,11 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
-@MapperScan("com.example.dao")
 @EnableAsync
 @EnableSwagger2
 @EnableScheduling
 @EnableTransactionManagement
+@MapperScan("com.example.dao")
 @SpringBootApplication(scanBasePackages ={"com.example.core","com.example.api","com.example.rest"})
 public class RestApplication {
     public static void main(String[] args) {

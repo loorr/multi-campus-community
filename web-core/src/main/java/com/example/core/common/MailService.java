@@ -1,7 +1,7 @@
 package com.example.core.common;
 
-import com.example.common.ChatErrorCode;
-import com.example.common.exception.ChatException;
+import com.example.api.common.ChatErrorCode;
+import com.example.api.common.ChatException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;

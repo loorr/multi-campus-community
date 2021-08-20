@@ -2,7 +2,7 @@ package com.example.rest.controller;
 
 
 import com.example.api.FileManagerApi;
-import com.example.common.ChatErrorCode;
+import com.example.api.common.ChatErrorCode;
 import com.example.common.Response;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +32,7 @@ public class FileManagerController implements FileManagerApi {
         try {
             Files.copy(file.getInputStream(),path, StandardCopyOption.REPLACE_EXISTING);
         } catch (IOException e) {
-           Response.getFail(ChatErrorCode.FILE_ERROE.getCode(), ChatErrorCode.FILE_ERROE.getMsg());
+           Response.getFail(ChatErrorCode.FILE_ERROE);
         }
         return Response.getOk(true);
     }
@@ -45,7 +45,7 @@ public class FileManagerController implements FileManagerApi {
     @Override
     public Response<Boolean> addManyFiles(@RequestParam("files") MultipartFile[] files) {
         if (files == null){
-            return Response.getFail(ChatErrorCode.EMPTY_PARAM.getCode(), ChatErrorCode.EMPTY_PARAM.getMsg());
+            return Response.getFail(ChatErrorCode.FILE_ERROE);
         }
         for (MultipartFile multipartFile : files) {
             addFile(multipartFile);

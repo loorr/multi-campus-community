@@ -3,8 +3,8 @@ package com.example.core.service.impl;
 
 import com.example.api.req.AddOrDeleteUserReq;
 import com.example.api.type.FriendState;
-import com.example.common.ChatErrorCode;
-import com.example.common.exception.ChatException;
+import com.example.api.common.ChatErrorCode;
+import com.example.api.common.ChatException;
 import com.example.core.service.FriendService;
 import com.example.dao.FriendMapper;
 import com.example.model.entity.Friends;
