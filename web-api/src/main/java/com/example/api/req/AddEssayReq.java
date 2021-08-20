@@ -24,9 +24,9 @@ public class AddEssayReq extends BaseIdReq {
 
     @ApiModelProperty(value = "hasSecret")
     @NotNull
-    private boolean hasSecret;
+    private Boolean hasSecret;
 
     @ApiModelProperty(value = "canPublic")
     @NotNull
-    private boolean canPublic;
+    private Boolean canPublic;
 }

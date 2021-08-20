@@ -1,5 +1,6 @@
 package com.example.api.type;
 
+import com.example.model.entity.Comment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -13,4 +14,15 @@ public enum CommentType {
     ;
 
     private int code;
+
+    public static boolean getType(CommentType type){
+        return type == REPLY_COMMENT;
+    }
+
+    public static CommentType getCommentType(boolean type){
+        if (type){
+            return REPLY_COMMENT;
+        }
+        return REPLY_ESSAY;
+    }
 }

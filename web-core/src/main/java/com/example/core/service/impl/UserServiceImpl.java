@@ -6,13 +6,14 @@ import com.example.common.IdGenerator;
 import com.example.api.common.ChatException;
 import com.example.core.service.UserService;
 import com.example.core.common.MailService;
-import com.example.core.common.RedisService;
+import com.example.core.common.impl.RedisUserServiceImpl;
 import com.example.dao.UserMapper;
 import com.example.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.Resource;
 import java.util.List;
 
 /**
@@ -22,19 +23,19 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
 
     @Autowired
-    private RedisService redisService;
+    private RedisUserServiceImpl redisUserService;
 
     @Autowired
     private MailService mailService;
 
-    @Autowired
+    @Resource
     private UserMapper userMapper;
 
     @Override
     public void sendCode(SignInReq req) {
         String code = IdGenerator.getCode();
         try {
-            redisService.setAuthCode(req.getEmail(), code);
+            redisUserService.setAuthCode(req.getEmail(), code);
             mailService.sendMail(req.getEmail(), "Sign Code", code);
         }catch (Exception e){
             throw new ChatException(ChatErrorCode.CODE_SEND_FILED);
@@ -48,7 +49,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public Long signUser(SignInReq req) {
-        String code = redisService.getAuthCode(req.getEmail());
+        String code = redisUserService.getAuthCode(req.getEmail());
         if (code == null){
             throw new ChatException(ChatErrorCode.CODE_EXPRIED);
         }

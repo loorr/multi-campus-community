@@ -6,7 +6,7 @@ import com.example.common.TokenUtil;
 import com.example.common.annotations.NeedToken;
 import com.example.common.annotations.PassToken;
 import com.example.common.exception.AuthExcetption;
-import com.example.core.common.RedisService;
+import com.example.core.common.impl.RedisUserServiceImpl;
 import com.example.core.service.UserService;
 import com.example.model.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +32,7 @@ public class TokenInterceptor implements HandlerInterceptor {
     UserService userService;
 
     @Autowired
-    RedisService redisService;
+    RedisUserServiceImpl redisUserService;
 
     @Override
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object object){
@@ -66,13 +66,13 @@ public class TokenInterceptor implements HandlerInterceptor {
                 // 获取 token 中的 user id
                 String userId =  claimMap.get(UID_ATTRIBUTE).asString();
                 String password = null;
-                password = redisService.getUserPasswordByUid(Long.valueOf(userId));
+                password = redisUserService.getUserPasswordByUid(Long.valueOf(userId));
                 if (password == null || password.length() == 0) {
                     User user = userService.findUserByUid(Long.valueOf(userId));
                     if (user == null || user.getPassword() == null){
                         throw new RuntimeException("用户不存在，请重新登录");
                     }
-                    redisService.setUserPasswordByUid(user.getUid(), user.getPassword());
+                    redisUserService.setUserPasswordByUid(user.getUid(), user.getPassword());
                     password = user.getPassword();
                 }
                 String newToken = TokenUtil.verifyToken(claimMap, password);

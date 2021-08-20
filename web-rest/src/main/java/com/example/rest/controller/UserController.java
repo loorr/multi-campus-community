@@ -12,7 +12,7 @@ import com.example.common.Response;
 import com.example.common.TokenUtil;
 import com.example.common.annotations.NeedToken;
 import com.example.api.common.ChatException;
-import com.example.core.common.RedisService;
+import com.example.core.common.impl.RedisUserServiceImpl;
 import com.example.core.service.UserService;
 import com.example.model.entity.User;
 import com.example.rest.BaseController;
@@ -32,7 +32,7 @@ public class UserController  extends BaseController implements UserApi {
     private UserService userService;
 
     @Autowired
-    private RedisService redisService;
+    private RedisUserServiceImpl redisUserService;
 
     @Override
     public Response<Boolean> sendCode(SignInReq req) {
@@ -70,7 +70,7 @@ public class UserController  extends BaseController implements UserApi {
         }else{
             dbUser = userService.findUserByEmail(req.getEmail());
         }
-        redisService.setUserPasswordByUid(dbUser.getUid(), dbUser.getPassword());
+        redisUserService.setUserPasswordByUid(dbUser.getUid(), dbUser.getPassword());
         if (dbUser == null || !dbUser.getPassword().equals(req.getPassword())){
             return Response.getFail(ChatErrorCode.AUTH_ERROR);
         }

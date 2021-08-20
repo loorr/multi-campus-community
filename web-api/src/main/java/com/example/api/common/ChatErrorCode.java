@@ -25,7 +25,11 @@ public enum ChatErrorCode implements BaseError {
     PASSWORD_ERROR("100", "密码错误"),
     EMPTY_PARAM("102","参数为空"),
     FILE_ERROE("1003", "文件错误"),
-    AUTH_ERROR("101", "用户信息错误");
+    NOT_ESSAY_PERMISSION("1004","The dynamic permission is not available"),
+    AUTH_ERROR("101", "用户信息错误"),
+    SECRET_CANNOT_PPUBLICK("102",""),
+    HAS_PRIVATE("003","已经是私密动态"),
+    ;
 
 
     private final String code;

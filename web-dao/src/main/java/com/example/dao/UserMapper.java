@@ -12,7 +12,6 @@ import java.util.List;
  * @author zjianfa
  */
 @Mapper
-@Repository
 public interface UserMapper {
 
     @Select("select * from user ORDER BY `id` limit #{num} ")

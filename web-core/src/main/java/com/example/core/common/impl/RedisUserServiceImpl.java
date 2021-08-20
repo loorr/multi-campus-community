@@ -1,4 +1,4 @@
-package com.example.core.common;
+package com.example.core.common.impl;
 
 import lombok.extern.slf4j.Slf4j;
 import org.redisson.api.RBucket;
@@ -13,7 +13,7 @@ import static com.example.core.common.RedisConstant.*;
 
 @Slf4j
 @Service
-public class RedisService {
+public class RedisUserServiceImpl {
 
     @Autowired
     RedissonClient redissonClient;

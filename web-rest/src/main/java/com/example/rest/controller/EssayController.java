@@ -3,6 +3,7 @@ package com.example.rest.controller;
 
 import com.example.api.EssayApi;
 import com.example.api.req.*;
+import com.example.api.vo.EssayVo;
 import com.example.common.Response;
 import com.example.api.common.ChatException;
 import com.example.common.annotations.NeedToken;
@@ -15,8 +16,6 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 public class EssayController extends BaseController implements EssayApi {
-
-
 
     @Autowired
     private EssayService essayService;
@@ -35,24 +34,26 @@ public class EssayController extends BaseController implements EssayApi {
 
     @Override
     public Response<Boolean> deleteEssay(DeleteEssayReq req) {
+
         return null;
     }
 
 
 
     @Override
-    public Response<Boolean> updataEssayState(AddOrDeleteUserReq req) {
+    public Response<Boolean> updataEssayState(DeleteEssayReq req) {
         return null;
     }
 
     @Override
-    public Response<PageInfo<Essay>> getAllEssay(GetAllEssayPageReq req) {
-        PageInfo<Essay> pageInfo = essayService.getAllEssay(req);
+    public Response<PageInfo<EssayVo>> getAllEssay(GetAllEssayPageReq req) {
+        PageInfo<EssayVo> pageInfo = essayService.getAllEssay(req);
         return Response.getOk(pageInfo);
     }
 
     @Override
-    public Response<Boolean> addEssayComment(GetAllEssayPageReq req) {
+    public Response<Boolean> addEssayComment(AddCommentReq req) {
+
         return null;
     }
 

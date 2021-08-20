@@ -14,6 +14,7 @@ public class IdGenerator {
     private static final int CODE_LENGTH;
     /** 个人ID长度 */
     private static final int UID_LENGTH;
+
     private static Snowflake snowflake;
 
     static {

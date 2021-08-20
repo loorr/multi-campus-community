@@ -15,9 +15,6 @@ import javax.validation.constraints.NotNull;
 @ApiModel
 public class AddCommentReq extends BaseIdReq {
 
-    @ApiModelProperty(value = "父评论id")
-    private int parentId;
-
     @ApiModelProperty(value = "评论类型")
     private CommentType commentType;
 
@@ -25,7 +22,11 @@ public class AddCommentReq extends BaseIdReq {
     @NotNull
     private Long essayId;
 
+    @ApiModelProperty(value = "父评论id")
+    private int parentId;
+
     @ApiModelProperty("内容")
     @NotEmpty
     private String content;
+
 }
