@@ -3,6 +3,7 @@ package com.example.rest.controller;
 
 import com.example.api.EssayApi;
 import com.example.api.req.*;
+import com.example.api.vo.CommentVo;
 import com.example.api.vo.EssayVo;
 import com.example.common.Response;
 import com.example.api.common.ChatException;
@@ -51,8 +52,20 @@ public class EssayController extends BaseController implements EssayApi {
         return Response.getOk(pageInfo);
     }
 
+    @NeedToken
     @Override
     public Response<Boolean> addEssayComment(AddCommentReq req) {
+        req.setUid(getLoginUid());
+        try {
+            essayService.addEssayComment(req);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+        return Response.getOk(true);
+    }
+
+    @Override
+    public Response<CommentVo> getEssayComment(GetCommentReq req) {
 
         return null;
     }

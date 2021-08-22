@@ -19,7 +19,7 @@ public interface EssayMapper {
     @Select("SELECT * FROM essay order by id")
     List<Essay> getAllEssayPage(GetAllEssayPageReq req);
 
-    @Select("")
+    @Select("SELECT has_secret FROM `essay` WHERE id = #{essayId}")
     boolean getHasSecretByEssayId(@Param("essayId") Long essayId);
 
     @Insert("<script>" +

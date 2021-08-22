@@ -1,5 +1,7 @@
 package com.example.core.common;
 
+import com.example.model.entity.User;
+
 public interface RedisUserService {
 
     void setAuthCode(String email, String code);
@@ -10,4 +12,5 @@ public interface RedisUserService {
 
     String getUserPasswordByUid(Long uid);
 
+    User getUserById(Long id);
 }

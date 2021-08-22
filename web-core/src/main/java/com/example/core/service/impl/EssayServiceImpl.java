@@ -5,6 +5,8 @@ import com.example.api.req.*;
 import com.example.api.common.ChatErrorCode;
 import com.example.api.common.ChatException;
 import com.example.api.type.CommentType;
+import com.example.api.vo.CommentItem;
+import com.example.api.vo.CommentVo;
 import com.example.api.vo.EssayVo;
 import com.example.core.common.RedisEssayService;
 import com.example.core.service.EssayService;
@@ -14,11 +16,13 @@ import com.example.model.entity.Comment;
 import com.example.model.entity.Essay;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
+import org.springframework.beans.BeanUtils;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class EssayServiceImpl implements EssayService {
@@ -141,5 +145,28 @@ public class EssayServiceImpl implements EssayService {
             throw new ChatException(ChatErrorCode.DUPLICATE_ERROR);
         }
         return false;
+    }
+
+    @Override
+    public CommentVo getEssayComment(GetCommentReq req) {
+        List<Comment> commentList = commentMapper.getCommentByEssayId(req.getEssayId());
+        if (commentList == null){
+            return new CommentVo();
+        }
+        CommentVo commentVo = new CommentVo(req.getEssayId());
+        commentList.forEach(item->{
+            Map<Integer, CommentItem> map = commentVo.getCommentItemMap();
+            CommentItem firstLevelItem = map.getOrDefault(item.getParentId(), new CommentItem());
+            // 如果是评论的评论
+            if(item.getType()){
+                CommentItem commentItem = new CommentItem();
+                BeanUtils.copyProperties(item, commentItem);
+                firstLevelItem.getCommentItemList().add(commentItem);
+            }else{
+                BeanUtils.copyProperties(item, firstLevelItem);
+            }
+            map.put(item.getParentId(), firstLevelItem);
+        });
+        return commentVo;
     }
 }

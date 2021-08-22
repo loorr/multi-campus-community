@@ -1,6 +1,7 @@
 package com.example.api;
 
 import com.example.api.req.*;
+import com.example.api.vo.CommentVo;
 import com.example.api.vo.EssayVo;
 import com.example.common.Response;
 import com.example.model.entity.Essay;
@@ -37,6 +38,10 @@ public interface EssayApi {
     @ApiOperation(value = "添加评论",notes = "添加动态评论，或者添加评论的评论, 只有两级")
     @PostMapping(value = "/essay/add-essay-comment", produces = MediaType.APPLICATION_JSON_VALUE)
     Response<Boolean> addEssayComment(@RequestBody @Validated AddCommentReq req);
+
+    @ApiOperation(value = "获取评论",notes = "获取某一个essay的全部评论")
+    @PostMapping(value = "/essay/get-essay-comment", produces = MediaType.APPLICATION_JSON_VALUE)
+    Response<CommentVo> getEssayComment(@RequestBody @Validated GetCommentReq req);
 
     @ApiOperation("点赞 或者 不喜欢,获取取消")
     @PostMapping(value = "/essay/add-attitude", produces = MediaType.APPLICATION_JSON_VALUE)

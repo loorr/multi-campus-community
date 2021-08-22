@@ -2,6 +2,7 @@ package com.example.core.service;
 
 
 import com.example.api.req.*;
+import com.example.api.vo.CommentVo;
 import com.example.api.vo.EssayVo;
 import com.github.pagehelper.PageInfo;
 
@@ -17,4 +18,6 @@ public interface EssayService {
     Boolean updataEssayState(DeleteEssayReq req);
 
     Boolean addEssayComment(AddCommentReq req);
+
+    CommentVo getEssayComment(GetCommentReq req);
 }

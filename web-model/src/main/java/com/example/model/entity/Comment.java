@@ -12,6 +12,6 @@ public class Comment extends BaseModel{
     private String content;
     private int likeNum;
     private int dislikeNum;
-    private boolean hasDelete;
-    private boolean type;
+    private Boolean hasDelete;
+    private Boolean type;
 }

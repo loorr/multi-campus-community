@@ -2,8 +2,12 @@ package com.example.dao;
 
 import com.example.model.entity.Comment;
 import org.apache.ibatis.annotations.Insert;
+import org.apache.ibatis.annotations.Param;
+import org.apache.ibatis.annotations.Select;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
+
+import java.util.List;
 
 @Mapper
 @Component
@@ -13,4 +17,6 @@ public interface CommentMapper {
             "VALUES(#{parentId}, #{essayId}, #{uid}, #{content}, #{type})")
     int addComment(Comment comment);
 
+    @Select("SELECT * FROM `comment` WHERE essay_id=#{essayId} ORDE")
+    List<Comment> getCommentByEssayId(@Param("essayId") Long essayId);
 }

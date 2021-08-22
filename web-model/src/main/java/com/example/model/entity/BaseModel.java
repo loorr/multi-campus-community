@@ -14,7 +14,7 @@ import java.sql.Timestamp;
 @AllArgsConstructor
 @NoArgsConstructor
 public class BaseModel {
-    private Long id;
+    private Integer id;
     private Timestamp dbCreateTime;
     private Timestamp dbModifyTime;
 }
