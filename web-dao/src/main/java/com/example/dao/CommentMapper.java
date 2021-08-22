@@ -17,6 +17,6 @@ public interface CommentMapper {
             "VALUES(#{parentId}, #{essayId}, #{uid}, #{content}, #{type})")
     int addComment(Comment comment);
 
-    @Select("SELECT * FROM `comment` WHERE essay_id=#{essayId} ORDE")
+    @Select("SELECT * FROM `comment` WHERE essay_id=#{essayId} ORDER BY `db_create_time`")
     List<Comment> getCommentByEssayId(@Param("essayId") Long essayId);
 }

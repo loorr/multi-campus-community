@@ -21,6 +21,7 @@ import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -161,11 +162,13 @@ public class EssayServiceImpl implements EssayService {
             if(item.getType()){
                 CommentItem commentItem = new CommentItem();
                 BeanUtils.copyProperties(item, commentItem);
+                // 有子项才新建对象
+                firstLevelItem.setCommentItemList(new ArrayList<>());
                 firstLevelItem.getCommentItemList().add(commentItem);
             }else{
                 BeanUtils.copyProperties(item, firstLevelItem);
+                map.put(item.getId(), firstLevelItem);
             }
-            map.put(item.getParentId(), firstLevelItem);
         });
         return commentVo;
     }

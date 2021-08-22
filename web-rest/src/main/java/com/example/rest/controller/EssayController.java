@@ -66,8 +66,7 @@ public class EssayController extends BaseController implements EssayApi {
 
     @Override
     public Response<CommentVo> getEssayComment(GetCommentReq req) {
-
-        return null;
+        return Response.getOk(essayService.getEssayComment(req));
     }
 
 
