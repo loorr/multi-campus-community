@@ -15,7 +15,7 @@ import java.util.List;
 @Mapper
 @Component
 public interface FriendMapper {
-    @Insert("INSERT INTO `friends`(`to_uid`, `from_uid`) VALUES(#{starUid}, #{uid})")
+    @Insert("INSERT INTO `friends`(`to_uid`, `from_uid`) VALUES(#{toUid}, #{uid})")
     int addFriend(AddOrDeleteUserReq req);
 
     @Select("SELECT `to_uid`, `from_uid` FROM `friends` WHERE `to_uid`=#{toUid} AND `from_uid` = #{fromUid} ")

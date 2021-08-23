@@ -26,10 +26,11 @@ public class FriendController extends BaseController implements FriendApi {
     @Autowired
     private FriendService friendService;
 
+    @NeedToken
     @Override
     public Response<FriendStateVo> addFriend(AddOrDeleteUserReq req) {
         requestInfoLog(req);
-        req.setFromUid(getLoginUid());
+        req.setUid(getLoginUid());
         FriendStateVo friendStateVo = new FriendStateVo();
         try {
             FriendState friendState = friendService.addFriend(req);
@@ -44,7 +45,7 @@ public class FriendController extends BaseController implements FriendApi {
     @Override
     public Response<Boolean> deleteFriend(AddOrDeleteUserReq req) {
         Long fromUid = getLoginUid();
-        req.setFromUid(fromUid);
+        req.setUid(fromUid);
         boolean result = friendService.deleteFriend(req);
         if (!result){
             return Response.getFail();
@@ -56,6 +57,11 @@ public class FriendController extends BaseController implements FriendApi {
     @Override
     public Response<FriendShipVo> getAllFriend(GetAllFriendReq req) {
         req.setUid(getLoginUid());
-        return Response.getOk(new FriendShipVo());
+        try{
+            FriendShipVo friendShipVo = friendService.getAllFriend(req);
+            return Response.getOk(friendShipVo);
+        }catch (ChatException e){
+            return Response.getFail(e);
+        }
     }
 }
