@@ -2,7 +2,9 @@ package com.example.core.service;
 
 
 import com.example.api.req.AddOrDeleteUserReq;
+import com.example.api.req.GetAllFriendReq;
 import com.example.api.type.FriendState;
+import com.example.api.vo.FriendShipVo;
 
 public interface FriendService {
 
@@ -10,4 +12,5 @@ public interface FriendService {
 
     Boolean deleteFriend(AddOrDeleteUserReq req);
 
+    FriendShipVo getAllFriend(GetAllFriendReq req);
 }

@@ -11,10 +11,12 @@ import lombok.Getter;
 @AllArgsConstructor
 public enum FriendState {
     /** 关注的人 */
-    FOLLWOWING(0),
+    FOLLOWING(0),
     /** 被关注 */
     FOLLOWED(1),
     /** 好友 */
-    BOTH_WAY(2);
+    BOTH_WAY(2),
+    /** 所有 */
+    ALL(3);
     private int code;
 }

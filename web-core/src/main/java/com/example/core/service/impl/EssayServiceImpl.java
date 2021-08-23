@@ -62,6 +62,8 @@ public class EssayServiceImpl implements EssayService {
         }
     }
 
+
+
     @Override
     public Boolean addEssayAttitude(AddAttitudeReq req) {
         switch (req.getAttitudeType()){

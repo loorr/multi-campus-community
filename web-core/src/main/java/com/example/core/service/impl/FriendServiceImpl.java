@@ -2,21 +2,29 @@ package com.example.core.service.impl;
 
 
 import com.example.api.req.AddOrDeleteUserReq;
+import com.example.api.req.GetAllFriendReq;
 import com.example.api.type.FriendState;
 import com.example.api.common.ChatErrorCode;
 import com.example.api.common.ChatException;
+import com.example.api.vo.FriendShipVo;
+import com.example.api.vo.UserInfoVo;
 import com.example.core.service.FriendService;
 import com.example.dao.FriendMapper;
 import com.example.model.entity.Friends;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 public class FriendServiceImpl implements FriendService {
 
-    @Autowired
-    FriendMapper friendMapper;
+    @Resource
+    private FriendMapper friendMapper;
 
     @Override
     public FriendState addFriend(AddOrDeleteUserReq req) {
@@ -31,14 +39,92 @@ public class FriendServiceImpl implements FriendService {
         }
         Friends friends = friendMapper.getFriendShip(req.getFromUid(), req.getToUid());
         if (friends == null || !req.getFromUid().equals(friends.getToUid())){
-            return FriendState.FOLLWOWING;
+            return FriendState.FOLLOWING;
         }
         return FriendState.BOTH_WAY;
     }
 
     @Override
     public Boolean deleteFriend(AddOrDeleteUserReq req) {
-        int row = friendMapper.deletFriendShip(req.getToUid(), req.getFromUid());
+        int row = friendMapper.deleteFriendShip(req.getToUid(), req.getFromUid());
         return row == 1;
+    }
+
+    @Override
+    public FriendShipVo getAllFriend(GetAllFriendReq req) {
+        FriendShipVo friendShipVo = new FriendShipVo();
+        switch (req.getRange()){
+            case FOLLOWING:
+                friendShipVo.setFollowing(getFollowing(req.getUid()));
+                break;
+            case FOLLOWED:
+                friendShipVo.setFollowed(getFollowed(req.getUid()));
+                break;
+            case BOTH_WAY:
+                friendShipVo = getAllFriendState(req.getUid(), FriendState.BOTH_WAY);
+            case ALL:
+                friendShipVo = getAllFriendState(req.getUid(), FriendState.ALL);
+            default:
+                break;
+        }
+        return friendShipVo;
+    }
+
+    private List<UserInfoVo> getFollowing(Long uid){
+        List<Friends> friends = friendMapper.getAllFollowingByUid(uid);
+        List<UserInfoVo> following = new ArrayList<>(friends.size());
+        friends.forEach(item->{
+            UserInfoVo userInfoVo = new UserInfoVo();
+            userInfoVo.setUid(item.getToUid());
+        });
+        return following;
+    }
+
+    private List<UserInfoVo> getFollowed(Long uid){
+        List<Friends> friends = friendMapper.getAllFollowedByUid(uid);
+        List<UserInfoVo> followed = new ArrayList<>(friends.size());
+        friends.forEach(item->{
+            UserInfoVo userInfoVo = new UserInfoVo();
+            userInfoVo.setUid(item.getToUid());
+        });
+        return followed;
+    }
+
+    private FriendShipVo getAllFriendState(Long uid, FriendState friendState){
+        FriendShipVo friendShipVo = new FriendShipVo();
+        List<Friends> friends = friendMapper.getAllFriendsByUid(uid);
+
+        Set<Long> followingSet = friends.stream()
+                .filter(item -> item.getFromUid().equals(uid))
+                .map(Friends::getToUid)
+                .collect(Collectors.toSet());
+        List<UserInfoVo> bothway = friends.stream()
+                .filter(item -> item.getToUid().equals(uid))
+                .map(item->{
+                    UserInfoVo user = new UserInfoVo();
+                    if (followingSet.contains(item.getFromUid())){
+                        user.setUid(item.getFromUid());
+                    }
+                    return user;
+                }).collect(Collectors.toList());
+        friendShipVo.setBothWay(bothway);
+        if (FriendState.BOTH_WAY == friendState){
+            return friendShipVo;
+        }
+
+        List<UserInfoVo> following = friends.stream().filter(o->o.getFromUid().equals(uid)).map(o->{
+            UserInfoVo userInfoVo = new UserInfoVo();
+            userInfoVo.setUid(o.getFromUid());
+            return userInfoVo;
+        }).collect(Collectors.toList());
+        friendShipVo.setFollowing(following);
+
+        List<UserInfoVo> followed = friends.stream().filter(o->o.getToUid().equals(uid)).map(o->{
+            UserInfoVo userInfoVo = new UserInfoVo();
+            userInfoVo.setUid(o.getFromUid());
+            return userInfoVo;
+        }).collect(Collectors.toList());
+        friendShipVo.setFollowed(followed);
+        return friendShipVo;
     }
 }

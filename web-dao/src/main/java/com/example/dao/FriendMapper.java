@@ -10,6 +10,8 @@ import org.apache.ibatis.annotations.Select;
 import org.mapstruct.Mapper;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Mapper
 @Component
 public interface FriendMapper {
@@ -20,6 +22,15 @@ public interface FriendMapper {
     Friends getFriendShip(@Param("toUid") Long toUid, @Param("fromUid") Long fromUid);
 
     @Delete("DELETE FROM `friends` WHERE `to_uid`=#{toUid} AND `from_uid` = #{fromUid} \"")
-    int deletFriendShip(@Param("toUid") Long toUid, @Param("fromUid") Long fromUid);
+    int deleteFriendShip(@Param("toUid") Long toUid, @Param("fromUid") Long fromUid);
+
+    @Select("SELECT * FROM `friends` WHERE `from_uid`=#{uid}")
+    List<Friends> getAllFollowingByUid(@Param("uid") Long uid);
+
+    @Select("SELECT * FROM `friends` WHERE `to_uid`=#{uid} ")
+    List<Friends> getAllFollowedByUid(@Param("uid") Long uid);
+
+    @Select("SELECT * FROM `friends` WHERE `to_uid`=#{uid} OR `from_uid`=#{uid}")
+    List<Friends> getAllFriendsByUid(@Param("uid") Long uid);
 }
 

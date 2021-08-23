@@ -52,6 +52,7 @@ public class FriendController extends BaseController implements FriendApi {
         return Response.getOk(true);
     }
 
+    @NeedToken
     @Override
     public Response<FriendShipVo> getAllFriend(GetAllFriendReq req) {
         req.setUid(getLoginUid());
