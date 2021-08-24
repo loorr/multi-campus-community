@@ -61,6 +61,7 @@ public class UserServiceImpl implements UserService {
             User user = new User();
             uid = IdGenerator.getUid();
             user.setUid(uid);
+
             user.setPassword(req.getPassword());
             user.setEmail(req.getEmail());
             user.setNickname(req.getNickname());

@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `campus_im`.`user` (
     `nickname` VARCHAR(20) unique NOT NULL COMMENT '昵称',
     `email` VARCHAR(20) unique NOT NULL COMMENT '邮箱',
     `phone` BIGINT(11) unique COMMENT '手机号',
-    `password` VARCHAR(20) NOT NULL COMMENT '密码',
+    `password` VARCHAR(100) NOT NULL COMMENT '密码',
     `admin` tinyint(1) default false COMMENT '是否管理员',
     `has_banned` tinyint(1) default false COMMENT '是否禁言，不允许发公开动态和评论',
     `release_time`  TIMESTAMP COMMENT '解禁时间',
