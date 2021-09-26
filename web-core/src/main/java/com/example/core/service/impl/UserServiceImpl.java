@@ -2,13 +2,16 @@ package com.example.core.service.impl;
 
 import com.example.api.req.SignInReq;
 import com.example.api.common.ChatErrorCode;
+import com.example.common.CryptoTool;
 import com.example.common.IdGenerator;
 import com.example.api.common.ChatException;
+import com.example.core.common.impl.CacheService;
 import com.example.core.service.UserService;
 import com.example.core.common.MailService;
 import com.example.core.common.impl.RedisUserServiceImpl;
 import com.example.dao.UserMapper;
 import com.example.model.entity.User;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.stereotype.Service;
@@ -19,11 +22,15 @@ import java.util.List;
 /**
  * @author zjianfa
  */
+@Slf4j
 @Service
 public class UserServiceImpl implements UserService {
 
     @Autowired
     private RedisUserServiceImpl redisUserService;
+
+    @Resource
+    CacheService cacheService;
 
     @Autowired
     private MailService mailService;
@@ -34,6 +41,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void sendCode(SignInReq req) {
         String code = IdGenerator.getCode();
+        log.debug("sign info the email {}, the code {}", req.getEmail(), code);
         try {
             redisUserService.setAuthCode(req.getEmail(), code);
             mailService.sendMail(req.getEmail(), "Sign Code", code);
@@ -61,31 +69,44 @@ public class UserServiceImpl implements UserService {
             User user = new User();
             uid = IdGenerator.getUid();
             user.setUid(uid);
-
-            user.setPassword(req.getPassword());
+            String cryptoPassword = CryptoTool.encrypt(req.getPassword());
+            user.setPassword(cryptoPassword);
             user.setEmail(req.getEmail());
             user.setNickname(req.getNickname());
-            userMapper.insertOne(user);
+            addUser(user);
+
         }catch (DuplicateKeyException e){
             throw new ChatException(ChatErrorCode.AUTH_ERROR);
         }
         return uid;
     }
 
+    public void addUser(User user){
+        try {
+            userMapper.insertOne(user);
+        }catch (DuplicateKeyException e){
+            throw e;
+        }
+        redisUserService.setUserByUid(user);
+    }
+
+
     @Override
     public User findUserByUid(Long uid) {
+        User user = redisUserService.getUserByUid(uid);
+        if (user != null){
+            return user;
+        }
         return userMapper.getUserByEmailOrUid(null, uid);
     }
 
     @Override
     public User findUserByEmail(String email) {
-        return userMapper.getUserByEmailOrUid(email, null);
+        User user =  userMapper.getUserByEmailOrUid(email, null);
+        if (user == null || user.getUid() == null){
+            throw new ChatException(ChatErrorCode.AUTH_ERROR);
+        }
+        redisUserService.setUserByUid(user);
+        return user;
     }
-
-    @Override
-    public void testAsync() {
-
-    }
-
-
 }

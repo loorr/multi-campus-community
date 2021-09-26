@@ -11,6 +11,10 @@ public class RedisConstant {
     /** 记录用户对文章的喜欢或者不喜欢,长度 11 01 10 00 */
     public static final String USER_ESSAY_STATE = "USER:ESSAY:%s:%s";
 
+    /** 存用户对象 hash */
+    public static final String USER_MAP = "USER:MAP:%s";
+
+
     public static String getRedisKey(String format, Object... keys){
         return String.format(format, keys);
     }

@@ -17,6 +17,4 @@ public interface UserService {
     User findUserByUid(Long uid);
 
     User findUserByEmail(String email);
-
-    void  testAsync();
 }

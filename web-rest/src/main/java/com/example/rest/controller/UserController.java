@@ -87,9 +87,8 @@ public class UserController  extends BaseController implements UserApi {
     }
 
     @Override
-    @NeedToken
     public Response<List<User>> getAllUserList() {
-        System.out.println(getLoginUid());
+//        System.out.println(getLoginUid());
         List<User> userList = userService.getAllUser(5);
         return Response.getOk(userList);
     }

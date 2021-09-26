@@ -1,24 +1,17 @@
 package com.example.core.common.impl;
 
-import com.example.core.common.UserCacheService;
-import com.example.core.service.UserService;
 import com.example.model.entity.User;
 import com.github.benmanes.caffeine.cache.Cache;
 import com.github.benmanes.caffeine.cache.Caffeine;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
 import java.util.concurrent.TimeUnit;
 
 @Service
-public class UserCacheServiceImpl implements UserCacheService {
-
-    @Resource
-    private UserService userService;
+public class CacheService {
 
     private Cache<Long, User> cache;
-
 
     @PostConstruct
     public void init(){
@@ -31,9 +24,8 @@ public class UserCacheServiceImpl implements UserCacheService {
                 .build();
     }
 
-    @Override
-    public User getUserById(Long uid){
-        System.out.println(cache.stats());
-        return cache.get(uid, (key)-> userService.findUserByUid(key));
+    public Cache<Long, User> getUserCache(){
+        return cache;
     }
+
 }

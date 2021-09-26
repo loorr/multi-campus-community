@@ -43,5 +43,4 @@ public class MailService {
             throw new ChatException(ChatErrorCode.EMAIL_SEND_FILED);
         }
     }
-
 }

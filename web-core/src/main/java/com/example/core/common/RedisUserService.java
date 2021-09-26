@@ -13,4 +13,6 @@ public interface RedisUserService {
     String getUserPasswordByUid(Long uid);
 
     User getUserById(Long id);
+
+    void removeAuthCode(String email);
 }
